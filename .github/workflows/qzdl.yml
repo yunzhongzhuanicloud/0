@@ -27,7 +27,8 @@ jobs:
           nohup sudo ./aria2c --conf-path=/home/runner/aria2c-config.conf > aria2c.log 2>&1 &
 
           
-          curl -s https://api.github.com/repos/cloudreve/cloudreve/releases/latest | grep "browser_download_url" | grep "linux_amd64.tar.gz" | cut -d '"' -f 4 | xargs curl -L -O
+          # curl -s https://api.github.com/repos/cloudreve/cloudreve/releases/latest | grep "browser_download_url" | grep "linux_amd64.tar.gz" | cut -d '"' -f 4 | xargs curl -L -O
+          curl -LO 'https://github.com/cloudreve/cloudreve/releases/download/4.18.0/cloudreve_4.18.0_linux_amd64.tar.gz'
           tar -xzf cloudreve*
           chmod +x cloudreve
           printf '%s\n' '[System]' 'Mode = slave' 'Listen = :5212' '' '[Slave]' 'Secret = I4pnMA5PDBMpB4kTiYPTWdwVmVTfdSOcRT7MLPEUCHNkXE3q3EzOyt8sJcqR9KRr' '' '; 如果你未来需要使用此节点存储，请保留下面的跨域配置。' '[CORS]' 'AllowOrigins = *' 'AllowMethods = OPTIONS,GET,POST' 'AllowHeaders = *' > config.ini
