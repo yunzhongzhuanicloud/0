@@ -32,9 +32,10 @@ jobs:
           tar -xzf cloudreve*
           chmod +x cloudreve
           printf '%s\n' '[System]' 'Mode = slave' 'Listen = :5212' '' '[Slave]' 'Secret = I4pnMA5PDBMpB4kTiYPTWdwVmVTfdSOcRT7MLPEUCHNkXE3q3EzOyt8sJcqR9KRr' '' '; 如果你未来需要使用此节点存储，请保留下面的跨域配置。' '[CORS]' 'AllowOrigins = *' 'AllowMethods = OPTIONS,GET,POST' 'AllowHeaders = *' > config.ini
-          nohup sudo ./cloudreve -c config.ini &
+          printf '%s\n%s' '858AAAB09EC4F1EF9D8CB1EE859BA6AF9FD0B3A5' 'CEAw7CT4RHLgv/+Wt4V42CSCSkW9R9MAeCgWUAUDGLV1QPRRT0rhyKvXoYOs2NLWf6asEzh5aAI5bLPbjJE0HQ==' > ./license
+          nohup sudo ./cloudreve --license-key=/home/runner/license -c config.ini &
 
-
+          
           mkdir -p /home/runner/.cloudflared && printf '%s\n' '-----BEGIN ARGO TUNNEL TOKEN-----' 'eyJ6b25lSUQiOiIwYmFlOTE2ZjMwZGFkMDllYmY1ZTkyZjQwODJlMTQ3OCIsImFj' 'Y291bnRJRCI6IjQ1MTI1MjVlZTE3MzM5NThjNGQxMTA3YjIzZDQ2N2JiIiwiYXBp' 'VG9rZW4iOiJjZnV0X2xPR2U3WjNWOU1UaVhHYW90QmV0cWlhYXRpa1JGa05yQlk2' 'bERxa0czNjFhOGI3NCJ9' '-----END ARGO TUNNEL TOKEN-----' > /home/runner/.cloudflared/cert.pem
           printf '%s\n' '{"AccountTag":"4512525ee1733958c4d1107b23d467bb","TunnelSecret":"1PjDvLzk/n1kU5OFGXYPUiEptK9JoH43c3iQxzg86lk=","TunnelID":"2e48f3f0-53d8-45da-a7a5-a579dab431ce","Endpoint":""}' > /home/runner/.cloudflared/2e48f3f0-53d8-45da-a7a5-a579dab431ce.json
           printf '%s\n' 'tunnel: 2e48f3f0-53d8-45da-a7a5-a579dab431ce' 'credentials-file: /home/runner/.cloudflared/2e48f3f0-53d8-45da-a7a5-a579dab431ce.json' 'ingress:' '  - hostname: qzdl.cdn.ad' '    service: http://127.0.0.1:5212' '  - service: http_status:404' > /home/runner/2e48f3f0-53d8-45da-a7a5-a579dab431ce.yml
