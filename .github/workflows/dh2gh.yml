@@ -1,0 +1,33 @@
+name: dh2gh
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04-arm
+
+    steps:
+      - name: runner
+        run: |
+          cd
+
+          curl -LO 'https://id5m3ekdhzod8g.1yunpan.com/Linux/aria2-1.36.0-static-linux-arm64.tar.gz'
+          # curl -X GET -L "https://github.com/P3TERX/Aria2-Pro-Core/releases/download/1.36.0_2021.08.22/aria2-1.36.0-static-linux-arm64.tar.gz" -o aria2-1.36.0-static-linux-arm64.tar.gz
+          tar -xzf aria2-1.36.0-static-linux-arm64.tar.gz
+          printf "dir=/home/runner\nfile-allocation=trunc\nmax-connection-per-server=32\nsplit=32\nmin-split-size=10M\nmax-overall-download-limit=0\nmax-download-limit=0\nmax-overall-upload-limit=0\nmax-upload-limit=0\nmax-concurrent-downloads=30\ncontinue=true\ntimeout=30\nretry-wait=5\nmax-tries=5\nenable-rpc=true\nrpc-listen-port=6800\nrpc-allow-origin-all=true\nrpc-listen-all=true\nbt-enable-lpd=false\nbt-seed-unverified=false\nseed-time=0\nbt-max-peers=55\nbt-save-metadata=true\nfollow-torrent=mem\nbt-remove-unselected-file=true\nauto-file-renaming=false\nallow-overwrite=true\nconditional-get=true\nhttp-accept-gzip=true\nuri-selector=adaptive\nlowest-speed-limit=0\n" > aria2c-config.conf
+          chmod +x aria2c
+          # nohup sudo ./aria2c --conf-path=/home/runner/aria2c-config.conf > aria2c.log 2>&1 &
+
+          curl -L 'http://www.1yunpan.com/python3/copy_sha256_from_docker_hub_to_github_ghcr.28pan.py' -o 0.py
+          
+          for i in $(seq 1 1); do
+            mkdir -p thread$i && \
+            echo 'while true; do python3 0.py; done' > thread$i/run.sh && \
+            chmod +x thread$i/run.sh && \
+            cp 0.py thread$i && \
+            (cd thread$i && nohup bash run.sh & pwd ) \
+          done
+
+          sleep 999999999
+          
