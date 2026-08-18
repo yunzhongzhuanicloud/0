@@ -1,4 +1,4 @@
-name: dh2gh
+name: dh2gh28p
 
 on:
   workflow_dispatch:
